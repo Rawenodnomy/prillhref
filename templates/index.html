@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link type="text/css" href="{{url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+</head>
+<body>
+
+<ul>
+    {% for i in menu %}
+    <li><a href="{{i.url}}"> {{i.name}}</a></li>
+    {% endfor %}
+</ul>
+
+<h1>{{title}}</h1>
+
+<p>сократим?</p>
+
+
+<form action="/short" method="POST">
+    <input type="text" name="href"> <br><br>
+    <input type="radio" id="pub" name="how" value="1" checked/>
+    <label for="pub">Публичная</label>
+<br>
+
+
+    {% if 'user_login' in session and session['user_login']!=None: %}
+    <input type="radio" id="obsh" name="how" value="2"  />
+    <label for="obsh">Общая</label>
+<br>
+    <input type="radio" id="priv" name="how" value="3"  />
+    <label for="priv">Приватная</label>
+<br><br>
+    {% else: %}
+    <input type="radio" id="obsh" name="how" value="2" disabled />
+    <label for="obsh">Общая</label>
+<br>
+    <input type="radio" id="priv" name="how" value="3" disabled />
+    <label for="priv">Приватная</label>
+<br><br>
+{% endif %}
+    <button>сократить</button>
+</form>
+{% for msg in get_flashed_messages() %}
+<br>
+<p>Ваша ссылка:</p>
+<a href="http://127.0.0.1:5000/href/{{msg}}">http://127.0.0.1:5000/href/{{msg}}</a>
+{% endfor %}
+
+
+</body>
+</html>
+
+
+
+
+
